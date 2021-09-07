@@ -1,5 +1,5 @@
 import React from 'react';
-//composant creer
+//composant créer
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
 import Footer from 'src/components/Footer';
@@ -13,7 +13,7 @@ function Blog() {
   return (
     <div className="blog">
       <Header categories={categoriesData}/>
-      <Posts/>
+      <Posts posts={postsData}/>
       <Footer/>
     </div>
   );
