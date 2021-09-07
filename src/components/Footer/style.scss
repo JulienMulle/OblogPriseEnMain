@@ -1,0 +1,9 @@
+@use 'src/styles/vars' as v;
+.footer {
+  background-color: v.$dark-color;
+  text-align: center;
+  padding: v.$gutter * 2;
+  &__content {
+    color: v.$alt-color;
+  }
+}
