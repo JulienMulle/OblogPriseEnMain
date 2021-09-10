@@ -1,11 +1,12 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 
 // composant créer
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
 import Footer from 'src/components/Footer';
 import { getPostsByCategory } from 'src/selectors';
+import NotFound from 'src/components/NotFound';
 // données
 import categoriesData from 'src/data/categories';
 import postsData from 'src/data/posts';
@@ -31,8 +32,12 @@ function Blog() {
   return (
     <div className="blog">
       <Header categories={categoriesData} />
-      {routes}
-      {/* <Posts posts={postsData} /> */}
+      <Switch>
+        {routes}
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
       <Footer />
     </div>
   );
