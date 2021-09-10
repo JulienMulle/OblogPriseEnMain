@@ -11,7 +11,7 @@ function Header({categories }) {
     <li key={category.route}>
       <NavLink 
       to={category.route} 
-      className="header__link">
+      className="header__link"
       activeClassName="header__link--selected"
       exact
       >

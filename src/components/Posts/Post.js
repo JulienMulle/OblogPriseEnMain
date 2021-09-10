@@ -13,7 +13,7 @@ function Post({title, category, excerpt}) {
     );
 }
 // creation de Post.propType où j'aurais besoin de title, category et exercpt 
-Post.propTypes={
+Post.propTypes = {
   title: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
