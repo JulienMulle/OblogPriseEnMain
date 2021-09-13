@@ -20,6 +20,11 @@ function Blog() {
   const [loading,setLoading] = useState(false)
   const [hasError, setHasError] = useState(false);
 
+  // useEffect est le hook qui sera en charge de gérer les effets de bord
+  // - Requête API
+  // - Listener
+  // - Timers
+  // - Manipulation de DOM
   // useEffect a 3 rôles, il vient cumuler ce que font les méthodes de lifecycle en class
   // 1e forme
   // on lui passe un callback qui sera exécuté à chaque rendu du composant
@@ -59,39 +64,24 @@ function Blog() {
     );
   });
 
-  const loadPosts = () => {
-    setLoading(true);
-    axios.get('https://oclock-open-apis.vercel.app/api/blog/posts')
-    .then((response) => {
-      // axios nous renvoie un objet, les data de la réponse se trouvent dans la propriété "data"
-      setPosts(response.data);
-    })
-    .catch((error) => {
-      console.log('error', error);
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const { data: categoriesData } = await axios.get('https://oclock-open-apis.vercel.app/api/blog/categories');
+      const { data: postsData } = await axios.get('https://oclock-open-apis.vercel.app/api/blog/posts');
+
+      setCategories(categoriesData);
+      setPosts(postsData);
+    }
+    catch (error) {
       setHasError(true);
-    })
-    .finally(() => {
+    }
+    finally {
+      // dans tous les cas (success / error) on passe par finally
+      // on retire le status de loading
       setLoading(false);
-    });
-    // on simule le chargement de données
-   // setTimeout(() => {
-     // console.log('ici je veux changer mon state');
-      //setPosts(postsData);
-      //setLoading(false);
-    //}, 1000);
+    }
   };
-  const loadCategories = () => {
-    axios.get('https://oclock-open-apis.vercel.app/api/blog/categories')
-      .then((response) => {
-        // axios nous renvoie un objet, les data de la réponse se trouvent dans la propriété "data"
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-        setHasError(true);
-      });
-  };
-  
 
   return (
     <div className="blog">
