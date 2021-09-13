@@ -2,14 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
+
 // composant créer
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
 import Footer from 'src/components/Footer';
 import { getPostsByCategory } from 'src/selectors';
 import NotFound from 'src/components/NotFound';
-// données
-import categoriesData from 'src/data/categories';
 
 // style
 import './style.scss';
@@ -17,9 +16,10 @@ import './style.scss';
 function Blog() {
 
   const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading,setLoading] = useState(false)
   const [hasError, setHasError] = useState(false);
-  
+
   // useEffect a 3 rôles, il vient cumuler ce que font les méthodes de lifecycle en class
   // 1e forme
   // on lui passe un callback qui sera exécuté à chaque rendu du composant
@@ -46,7 +46,7 @@ function Blog() {
   // on va générer un composant Route pour chaque catégorie
   // ce composant Route viendra prendre une liste de poste triée en fonction
   // de la catégorie
-  const routes = categoriesData.map((category) => {
+  const routes = categories.map((category) => {
     const postsList = getPostsByCategory(category.label, posts);
     return (
       <Route
@@ -59,7 +59,7 @@ function Blog() {
     );
   });
 
-  const loadData = () => {
+  const loadPosts = () => {
     setLoading(true);
     axios.get('https://oclock-open-apis.vercel.app/api/blog/posts')
     .then((response) => {
@@ -80,12 +80,22 @@ function Blog() {
       //setLoading(false);
     //}, 1000);
   };
-
+  const loadCategories = () => {
+    axios.get('https://oclock-open-apis.vercel.app/api/blog/categories')
+      .then((response) => {
+        // axios nous renvoie un objet, les data de la réponse se trouvent dans la propriété "data"
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.log('error', error);
+        setHasError(true);
+      });
+  };
   
 
   return (
     <div className="blog">
-      <Header categories={categoriesData} />
+      <Header categories={categories} />
      
       {hasError && <div>Une erreur s'est produite</div>}
       {loading && <div>Chargement des données</div>}
