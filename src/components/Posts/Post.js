@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
+import { Link } from 'react-router-dom';
 
-function Post({title, category, excerpt}) {
+function Post({title, category, excerpt, slug}) {
+ 
+
     // lorqu'on récupère des données, il faut s'assurer qu'elles ne sont pas
   // dangereuses. Pour cela il faut les assainir, ici avec DOMPurify
   const createMarkup = () => {
@@ -11,11 +14,13 @@ function Post({title, category, excerpt}) {
   };
     return (
         <li className="post">
+      <Link to={`post/${slug}`}>
         <article>
           <h2 className="post__title">{title}</h2>
           <div className="post__category">{category}</div>
-          <p className="post__content"dangerouslySetInnerHTML={createMarkup()}/>
+          <p className="post__content" dangerouslySetInnerHTML={createMarkup()} />
         </article>
+      </Link>
       </li>
     );
 }
@@ -24,6 +29,7 @@ Post.propTypes = {
   title: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
 export default Post;

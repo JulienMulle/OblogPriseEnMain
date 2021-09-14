@@ -1,0 +1,27 @@
+@use 'src/styles/vars' as v;
+
+.single {
+  padding: v.$gutter;
+  &__title {
+    font-family: v.$title-font;
+    font-weight: v.$title-font-weight;
+    color: v.$title-color;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    margin-bottom: v.$gutter / 3;
+  }
+
+  &__category {
+    background-color: v.$primary-color;
+    color: v.$light-color;
+    margin-bottom: v.$gutter / 3;
+    display: inline-block;
+    padding: v.$gutter / 5 v.$gutter / 4;
+    text-transform: uppercase;
+    font-size: .8em;
+  }
+
+  &__content {
+    color: v.$post-text-color;
+  }
+} 

@@ -9,6 +9,7 @@ import Posts from 'src/components/Posts';
 import Footer from 'src/components/Footer';
 import { getPostsByCategory } from 'src/selectors';
 import NotFound from 'src/components/NotFound';
+import Single from 'src/components/Single';
 
 // style
 import './style.scss';
@@ -93,8 +94,11 @@ function Blog() {
       <Switch>
         {routes}
         <Redirect from="/jquery" to="/autre" />
+        <Route path="/post/:slug">
+            <Single />
+        </Route>
         <Route>
-          <NotFound />
+            <NotFound />
         </Route>
       </Switch>
       )}
