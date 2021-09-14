@@ -5,6 +5,7 @@ import { useParams, Redirect } from 'react-router-dom';
 import './style.scss';
 
 function Single({ posts}) {
+  const { slug } = useParams();
     // const foundPost = posts.find((post) => post.slug === slug);
   // on peut destructurer directement l'objet retourner par find
   const foundPost = posts.find((post) => post.slug === slug);

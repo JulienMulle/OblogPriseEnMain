@@ -10,9 +10,12 @@ import Footer from 'src/components/Footer';
 import { getPostsByCategory } from 'src/selectors';
 import NotFound from 'src/components/NotFound';
 import Single from 'src/components/Single';
+import Lottie from 'src/components/Lottie';
+import plane from 'src/animations/plane.json';
 
 // style
 import './style.scss';
+import LottieAnimation from '../Lottie';
 
 function Blog() {
 
@@ -47,24 +50,6 @@ function Blog() {
   // useEffect(() => {
   //   console.log('3e forme de useEffect');
   // }, [posts]);
-  useEffect(loadData,[]);
-
-  // on va générer un composant Route pour chaque catégorie
-  // ce composant Route viendra prendre une liste de poste triée en fonction
-  // de la catégorie
-  const routes = categories.map((category) => {
-    const postsList = getPostsByCategory(category.label, posts);
-    return (
-      <Route
-        path={category.route}
-        key={category.route}
-        exact
-      >
-        <Posts posts={postsList} />
-      </Route>
-    );
-  });
-
   const loadData = async () => {
     try {
       setLoading(true);
@@ -84,12 +69,32 @@ function Blog() {
     }
   };
 
+  useEffect(loadData,[]);
+
+  // on va générer un composant Route pour chaque catégorie
+  // ce composant Route viendra prendre une liste de poste triée en fonction
+  // de la catégorie
+  const routes = categories.map((category) => {
+    const postsList = getPostsByCategory(category.label, posts);
+    return (
+      <Route
+        path={category.route}
+        key={category.route}
+        exact
+      >
+        <Posts posts={postsList} />
+      </Route>
+    );
+  });
+
+
+
   return (
     <div className="blog">
       <Header categories={categories} />
      
       {hasError && <div>Une erreur s'est produite</div>}
-      {loading && <div>Chargement des données</div>}
+      {loading && <Lottie lotti={plane} height={330} width={350} />}
       {!loading && !hasError && (
       <Switch>
         {routes}
