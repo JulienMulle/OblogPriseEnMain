@@ -94,9 +94,11 @@ function Blog() {
       <Switch>
         {routes}
         <Redirect from="/jquery" to="/autre" />
-        <Route path="/post/:slug">
-            <Single />
-        </Route>
+        {posts.length > 0 && (
+            <Route path="/post/:slug">
+              <Single posts={posts} />
+            </Route>
+          )} 
         <Route>
             <NotFound />
         </Route>
